@@ -34,5 +34,25 @@ Edit the file `/etc/apache2/sites-enabled/000-default.conf` (yes, I know it's a 
 </Directory>
 ```
 
+The file is also added in this git reposiroty and you may check its history.
+
+Restart the apache server with `systemctl restart apache2`.
+
+Now, create a file `/var/www/html/test-ssi.shtml` with this content:
+
+```
+<html>
+<head>
+  <title>ssi test</title>
+</head>
+<body>
+  <h1>ssi test</h1>
+
+  <p>Server date is: <!--#echo var="DATE_LOCAL" --> </p>
+
+</body>
+</html>
+```
+
 
 
