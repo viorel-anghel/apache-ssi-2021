@@ -1,0 +1,17 @@
+<html>
+<head>
+  <title>ssi test</title>
+</head>
+<body>
+  <h1>ssi test</h1>
+
+  <p>Server date is: <!--#echo var="DATE_LOCAL" --> </p>
+
+<pre>
+Server info:
+<!--#exec cmd="/info.sh" -->
+</pre>
+
+</body>
+</html>
+

@@ -36,7 +36,11 @@ Edit the file `/etc/apache2/sites-enabled/000-default.conf` (yes, I know it's a 
 
 The file is also added in this git reposiroty and you may check its history.
 
-Restart the apache server with `systemctl restart apache2`.
+Enable the `include` module and restart the apache server:
+```
+a2enmod include
+systemctl restart apache2
+```
 
 Now, create a file `/var/www/html/test-ssi.shtml` with this content:
 
@@ -53,6 +57,61 @@ Now, create a file `/var/www/html/test-ssi.shtml` with this content:
 </body>
 </html>
 ```
+
+Access it in a browser. You may even test locally with `curl localhost/test-ssi.shtml`. It should show a nice timestamp.
+
+### SSI Exec
+
+Let's try something more dynamic, let's try running a shell script from the HTML page. 
+
+Create a file `/info.sh` (at that exact location, /) with this content:
+```bash
+#!/bin/bash
+hostname
+uname -a
+uptime
+hostname -I
+```
+
+It's a simple shell script and to run it you need to make it executable `chmod 755 /info.sh` and then youu can run it using the full path. `/info.sh' should show some system info.
+
+To run this from a web page and see the result in a browser, create a file `/var/www/html/test-ssi-exec.shtml` like this:
+
+```
+<html>
+<head>
+  <title>ssi test</title>
+</head>
+<body>
+  <h1>ssi test</h1>
+
+  <p>Server date is: <!--#echo var="DATE_LOCAL" --> </p>
+
+<pre>
+Server info:
+<!--#exec cmd="/info.sh" -->
+</pre>
+
+</body>
+</html>
+```
+
+But when you try to access it, for example `curl localhost/test-ssi-exec.shtml`, the exec part will give an error:
+```
+[an error occurred while processing this directive]
+```
+
+One last step is needed in this battle with SSI, enable the cgi module and this will permit SSI+exec:
+```
+a2enmod cgi
+systemctl restart apache2
+
+curl localhost/test-ssi-exec.shtml
+```
+
+### the end
+This is it, you are now ready to try other tricks from the official SSI documentation.
+
 
 
 
