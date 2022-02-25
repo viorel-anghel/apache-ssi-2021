@@ -73,7 +73,7 @@ uptime
 hostname -I
 ```
 
-It's a simple shell script and to run it you need to make it executable `chmod 755 /info.sh` and then youu can run it using the full path. `/info.sh' should show some system info.
+It's a simple shell script and to run it you need to make it executable `chmod 755 /info.sh` and then you can run it using the full path. `/info.sh` should show some system info.
 
 To run this from a web page and see the result in a browser, create a file `/var/www/html/test-ssi-exec.shtml` like this:
 
